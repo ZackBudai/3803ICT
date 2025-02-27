@@ -5,18 +5,17 @@ import csv
 def get_movies(url):
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text)
-    # print(soup.prettify())
+
     movies = soup.find_all('li', {"class":'ipc-metadata-list-summary-item'})
-    # print(movies[0])
-    print(len(movies))
+
     titles = [movie.h3.text.split(". ")[1] for movie in movies]
-    # print(titles)
+
     rankings = [movie.h3.text.split(". ")[0] for movie in movies]
-    # print(rankings)
+
     years = [movie.find_all('span')[1].text for movie in movies]
-    # print(years)
+
     ratings = [movie.find_all('span')[4].span.text.split("\xa0")[0] for movie in movies]
-    # print(ratings)
+
     lst = list(zip(titles, rankings, years, ratings))
     lst = [list(elem) for elem in lst]
     
